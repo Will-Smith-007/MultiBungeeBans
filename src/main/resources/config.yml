@@ -5,4 +5,5 @@ redisSecret: "SuperSecretPassword"
 sqlHost: "localhost"
 sqlPort: 3306
 sqlDatabase: "multi_bungee_bans"
+sqlUsername: "admin"
 sqlSecret: "SuperSecretPassword"

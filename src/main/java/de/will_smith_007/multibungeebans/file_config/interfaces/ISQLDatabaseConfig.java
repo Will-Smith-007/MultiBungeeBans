@@ -8,5 +8,7 @@ public interface ISQLDatabaseConfig {
 
     String getSQLDatabaseName();
 
+    String getSQLUsername();
+
     String getSQLSecret();
 }

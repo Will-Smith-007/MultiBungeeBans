@@ -80,6 +80,11 @@ public class DatabaseConfig implements IRedisDatabaseConfig, ISQLDatabaseConfig 
     }
 
     @Override
+    public String getSQLUsername() {
+        return configuration.getString("sqlUsername");
+    }
+
+    @Override
     public String getSQLSecret() {
         return configuration.getString("sqlSecret");
     }
