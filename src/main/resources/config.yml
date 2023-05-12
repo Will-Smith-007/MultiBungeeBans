@@ -1,0 +1,8 @@
+redisHost: "localhost"
+redisPort: 6379
+redisSecret: "SuperSecretPassword"
+
+sqlHost: "localhost"
+sqlPort: 3306
+sqlDatabase: "multi_bungee_bans"
+sqlSecret: "SuperSecretPassword"
