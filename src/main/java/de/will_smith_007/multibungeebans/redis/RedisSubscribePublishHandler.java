@@ -33,6 +33,7 @@ public class RedisSubscribePublishHandler implements IRedisSubscribePublishHandl
     public void subscribe(@NonNull String channelName) {
         final JedisPool jedisPool = redisConnector.getJedisPool();
 
+        // Thread blocking operation, must run async
         CompletableFuture.runAsync(() -> {
             final JedisPubSub jedisPubSub = redisSubscriptionHandler.handleSubscriptions(channelName);
 

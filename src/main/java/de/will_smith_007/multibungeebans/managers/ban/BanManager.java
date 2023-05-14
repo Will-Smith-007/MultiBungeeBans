@@ -34,6 +34,7 @@ public class BanManager {
             final String bannedUsername = bannedUser.getBannedUsername();
             final String bannedBy = bannedUser.getBannedBy();
             final String banReason = bannedUser.getBanReason();
+            final boolean isPermanentlyBanned = bannedUser.isPermanentlyBanned();
 
             try {
                 preparedStatement.setString(1, bannedUser.getBannedUUID().toString());
@@ -42,14 +43,14 @@ public class BanManager {
                 preparedStatement.setString(4, banReason);
                 preparedStatement.setString(5, formattedBanDateTime);
                 preparedStatement.setString(6, formattedUnbanDateTime);
-                preparedStatement.setBoolean(7, false);
+                preparedStatement.setBoolean(7, isPermanentlyBanned);
 
                 preparedStatement.setString(8, bannedUsername);
                 preparedStatement.setString(9, bannedBy);
                 preparedStatement.setString(10, banReason);
                 preparedStatement.setString(11, formattedBanDateTime);
                 preparedStatement.setString(12, formattedUnbanDateTime);
-                preparedStatement.setBoolean(13, false);
+                preparedStatement.setBoolean(13, isPermanentlyBanned);
 
                 preparedStatement.executeUpdate();
                 preparedStatement.close();

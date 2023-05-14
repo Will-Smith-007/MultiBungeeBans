@@ -1,6 +1,7 @@
 package de.will_smith_007.multibungeebans.dependency_injection;
 
 import com.google.inject.AbstractModule;
+import com.google.inject.name.Names;
 import de.will_smith_007.multibungeebans.file_config.DatabaseConfig;
 import de.will_smith_007.multibungeebans.file_config.interfaces.IRedisDatabaseConfig;
 import de.will_smith_007.multibungeebans.file_config.interfaces.ISQLDatabaseConfig;
@@ -39,5 +40,10 @@ public class InjectionModule extends AbstractModule {
         bind(ISQLDatabaseConfig.class).to(DatabaseConfig.class);
         bind(IDatabaseProvider.class).to(DatabaseProvider.class);
         bind(IHikariConfigurationHandler.class).to(HikariConfigurationHandler.class);
+
+        // Command bindings
+        bind(String.class).annotatedWith(Names.named("BanCommand")).toInstance("ban");
+        bind(String.class).annotatedWith(Names.named("UnbanCommand")).toInstance("unban");
+        bind(String.class).annotatedWith(Names.named("TempBanCommand")).toInstance("tempban");
     }
 }

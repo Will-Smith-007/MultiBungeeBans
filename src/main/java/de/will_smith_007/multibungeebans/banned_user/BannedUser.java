@@ -15,6 +15,6 @@ public class BannedUser {
     private final UUID bannedUUID;
     private String bannedUsername, bannedBy, banReason;
     private LocalDateTime bannedDateTime, unbanDateTime;
-    private boolean isPermanentlyBanned = false;
-    private long banID = -1L;
+    private boolean isPermanentlyBanned;
+    private long banID;
 }

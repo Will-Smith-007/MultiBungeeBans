@@ -86,10 +86,10 @@ public class DatabaseProvider implements IDatabaseProvider {
 
     private void createDefaultTables() {
         updateQuery("CREATE TABLE IF NOT EXISTS multi_bungee_bans(banID BIGINT(20) AUTO_INCREMENT " +
-                "PRIMARY KEY, bannedUUID VARCHAR(32) UNIQUE, bannedName VARCHAR(16), bannedBy VARCHAR(16), " +
+                "PRIMARY KEY, bannedUUID VARCHAR(64) UNIQUE, bannedName VARCHAR(32), bannedBy VARCHAR(32), " +
                 "reason VARCHAR(64), bannedDate VARCHAR(64), unbanDate VARCHAR(64), permanentlyBanned BOOL);");
 
-        updateQuery("CREATE TABLE IF NOT EXISTS multi_bungee_players(uuid VARCHAR(32) PRIMARY KEY, " +
-                "username VARCHAR(16));");
+        updateQuery("CREATE TABLE IF NOT EXISTS multi_bungee_players(uuid VARCHAR(64) PRIMARY KEY, " +
+                "username VARCHAR(32));");
     }
 }

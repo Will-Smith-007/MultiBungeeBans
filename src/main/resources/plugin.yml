@@ -2,3 +2,9 @@ main: de.will_smith_007.multibungeebans.Main
 name: MultiBungeeBans
 version: 1.0.0-SNAPSHOT
 author: Will_Smith_007
+
+commands:
+  ban:
+    description: Ban a player across multiple proxies.
+  unban:
+    description: Unban a player from your network.

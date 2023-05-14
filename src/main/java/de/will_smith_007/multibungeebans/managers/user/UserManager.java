@@ -4,7 +4,6 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import de.will_smith_007.multibungeebans.sql.interfaces.IDatabaseProvider;
 import lombok.NonNull;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,15 +20,13 @@ public class UserManager {
         this.databaseProvider = databaseProvider;
     }
 
-    public void updatePlayerDataAsync(@NonNull ProxiedPlayer proxiedPlayer) {
-        final UUID uuid = proxiedPlayer.getUniqueId();
-        final String username = proxiedPlayer.getName();
+    public void updatePlayerDataAsync(@NonNull UUID playerUUID, @NonNull String username) {
         final String sqlQuery = "INSERT INTO multi_bungee_players(uuid, username) VALUES (?, ?) ON DUPLICATE KEY " +
                 "UPDATE username= ?";
 
         databaseProvider.preparedStatementAsync(sqlQuery).thenAccept(preparedStatement -> {
             try {
-                preparedStatement.setString(1, uuid.toString());
+                preparedStatement.setString(1, playerUUID.toString());
                 preparedStatement.setString(2, username);
                 preparedStatement.setString(3, username);
 
@@ -50,7 +47,8 @@ public class UserManager {
 
             final ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                return UUID.fromString(resultSet.getString("uuid"));
+                final String stringUUID = resultSet.getString("uuid");
+                return (stringUUID != null ? UUID.fromString(stringUUID) : null);
             }
             preparedStatement.close();
         } catch (SQLException sqlException) {
