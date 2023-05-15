@@ -8,6 +8,10 @@ import de.will_smith_007.multibungeebans.file_config.interfaces.ISQLDatabaseConf
 import de.will_smith_007.multibungeebans.sql.interfaces.IHikariConfigurationHandler;
 import lombok.NonNull;
 
+/**
+ * This class has the responsibility to set up the {@link HikariConfig} and create the {@link HikariDataSource}
+ * from this configuration.
+ */
 @Singleton
 public class HikariConfigurationHandler implements IHikariConfigurationHandler {
 

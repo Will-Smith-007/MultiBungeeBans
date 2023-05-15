@@ -10,6 +10,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
 
+/**
+ * This manager has only the responsibility to update and get data from a player such as the username in the sql database.
+ */
 @Singleton
 public class UserManager {
 
@@ -20,6 +23,13 @@ public class UserManager {
         this.databaseProvider = databaseProvider;
     }
 
+    /**
+     * Inserts the player {@link UUID} and username of a player into the sql database.
+     * If player exists in the database, then it will update the username of the player.
+     *
+     * @param playerUUID UUID of the player which should be inserted.
+     * @param username   Username of player which should be inserted or updated.
+     */
     public void updatePlayerDataAsync(@NonNull UUID playerUUID, @NonNull String username) {
         final String sqlQuery = "INSERT INTO multi_bungee_players(uuid, username) VALUES (?, ?) ON DUPLICATE KEY " +
                 "UPDATE username= ?";
@@ -38,6 +48,12 @@ public class UserManager {
         });
     }
 
+    /**
+     * Gets the {@link UUID} of the given username.
+     *
+     * @param username Username of player from which you want to get the {@link UUID}.
+     * @return The UUID of the given username. Can be null if the username wasn't found in the sql database.
+     */
     public UUID getPlayerUUID(@NonNull String username) {
         final String sqlQuery = "SELECT uuid FROM multi_bungee_players WHERE username= ?";
         final PreparedStatement preparedStatement = databaseProvider.preparedStatement(sqlQuery);

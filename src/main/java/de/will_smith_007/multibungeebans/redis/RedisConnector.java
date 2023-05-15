@@ -12,6 +12,9 @@ import redis.clients.jedis.JedisPoolConfig;
 
 import java.util.logging.Logger;
 
+/**
+ * This class has only the responsibility to handle redis connections.
+ */
 @Singleton
 public class RedisConnector implements IRedisConnector {
 

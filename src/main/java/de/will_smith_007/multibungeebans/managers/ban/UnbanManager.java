@@ -7,6 +7,9 @@ import lombok.NonNull;
 
 import java.sql.SQLException;
 
+/**
+ * This manager has only the responsibility to delete player bans from the sql database.
+ */
 @Singleton
 public class UnbanManager {
 
@@ -17,6 +20,11 @@ public class UnbanManager {
         this.databaseProvider = databaseProvider;
     }
 
+    /**
+     * Deletes a player ban from the database asynchronously.
+     *
+     * @param uuidOrName UUID as string or username from which the ban should be deleted.
+     */
     public void unbanPlayerAsync(@NonNull String uuidOrName) {
         final String sqlQuery = "DELETE FROM multi_bungee_bans WHERE bannedUUID= ? OR bannedName= ?";
 
@@ -33,6 +41,11 @@ public class UnbanManager {
         });
     }
 
+    /**
+     * Deletes a player ban from the database asynchronously.
+     *
+     * @param banID ID of ban from which the ban should be deleted.
+     */
     public void unbanPlayerAsync(long banID) {
         final String sqlQuery = "DELETE FROM multi_bungee_bans WHERE banID= ?";
 

@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * This {@link Command} allows you to temporary ban players across multiple proxies.
+ * This {@link Command} allows you to temporarily ban players across multiple proxies.
  */
 public class TempBanCommand extends Command implements TabExecutor {
 
@@ -104,7 +104,7 @@ public class TempBanCommand extends Command implements TabExecutor {
 
             banManager.banPlayerAsync(bannedUser);
 
-            sender.sendMessage(new TextComponent(Message.PREFIX + "§aYou have§e temporary§a banned §e" + targetUsername +
+            sender.sendMessage(new TextComponent(Message.PREFIX + "§aYou have§e temporarily§a banned §e" + targetUsername +
                     "§a with the reason §e" + stringReasonBuilder + "§a."));
 
             final String formattedKickMessage = banMessageFormatter.formatKickMessage(bannedUser);

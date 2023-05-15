@@ -16,6 +16,9 @@ import net.md_5.bungee.event.EventHandler;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+/**
+ * This {@link Listener} handles whether a player can join the network without a ban or not if he is banned.
+ */
 public class PlayerConnectionListener implements Listener {
 
     private final BanInformationManager banInformationManager;
@@ -44,9 +47,11 @@ public class PlayerConnectionListener implements Listener {
 
         final String uuidString = playerUUID.toString();
         final BannedUser bannedUser = banInformationManager.getBanInformation(uuidString);
+        // If the player isn't banned
         if (bannedUser == null) return;
 
         final LocalDateTime unbanDateTime = bannedUser.getUnbanDateTime();
+        // If the player is temporarily banned, check if current date time is after unban date time
         if (unbanDateTime != null) {
             final LocalDateTime currentLocalDateTime = LocalDateTime.now();
 

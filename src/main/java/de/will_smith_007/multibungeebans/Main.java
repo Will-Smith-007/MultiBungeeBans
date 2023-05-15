@@ -7,6 +7,7 @@ import de.will_smith_007.multibungeebans.dependency_injection.InjectionModule;
 import de.will_smith_007.multibungeebans.listeners.PlayerConnectionListener;
 import de.will_smith_007.multibungeebans.redis.interfaces.IRedisConnector;
 import de.will_smith_007.multibungeebans.redis.interfaces.IRedisSubscribePublishHandler;
+import de.will_smith_007.multibungeebans.sql.interfaces.IDatabaseConnector;
 import lombok.NonNull;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Command;
@@ -24,6 +25,7 @@ public class Main extends Plugin {
         injector.getInstance(IRedisConnector.class).connect();
         injector.getInstance(IRedisSubscribePublishHandler.class).subscribe("BanChannel");
 
+        // Command registration
         registerCommands(
                 injector.getInstance(BanCommand.class),
                 injector.getInstance(UnbanCommand.class),
@@ -32,6 +34,7 @@ public class Main extends Plugin {
                 injector.getInstance(BanListCommand.class)
         );
 
+        // Listener registration
         registerListeners(
                 injector.getInstance(PlayerConnectionListener.class)
         );
@@ -43,16 +46,27 @@ public class Main extends Plugin {
     public void onDisable() {
         injector.getInstance(IRedisSubscribePublishHandler.class).unsubscribe("BanChannel");
         injector.getInstance(IRedisConnector.class).closeConnection();
+        injector.getInstance(IDatabaseConnector.class).closeConnection();
 
         getLogger().info("Bye!");
     }
 
+    /**
+     * Registers all listeners in the specified {@link Listener} array.
+     *
+     * @param listeners Classes which implements the {@link Listener} interface.
+     */
     private void registerListeners(Listener @NonNull ... listeners) {
         for (Listener listener : listeners) {
             pluginManager.registerListener(this, listener);
         }
     }
 
+    /**
+     * Registers all commands in the specified {@link Command} array.
+     *
+     * @param commands Classes which are extending from the {@link Command} abstract class.
+     */
     private void registerCommands(Command @NonNull ... commands) {
         for (Command command : commands) {
             pluginManager.registerCommand(this, command);

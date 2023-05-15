@@ -3,6 +3,7 @@ package de.will_smith_007.multibungeebans.sql;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.zaxxer.hikari.HikariDataSource;
+import de.will_smith_007.multibungeebans.sql.interfaces.IDatabaseConnector;
 import de.will_smith_007.multibungeebans.sql.interfaces.IDatabaseProvider;
 import de.will_smith_007.multibungeebans.sql.interfaces.IHikariConfigurationHandler;
 import lombok.NonNull;
@@ -15,8 +16,11 @@ import java.sql.Statement;
 import java.util.concurrent.CompletableFuture;
 import java.util.logging.Logger;
 
+/**
+ * This class has the responsibility to handle sql database connections and sql database query executions.
+ */
 @Singleton
-public class DatabaseProvider implements IDatabaseProvider {
+public class DatabaseProvider implements IDatabaseProvider, IDatabaseConnector {
 
     private final Logger logger;
     private volatile Connection connection;
@@ -84,6 +88,9 @@ public class DatabaseProvider implements IDatabaseProvider {
         return CompletableFuture.supplyAsync(() -> preparedStatement(sqlQuery));
     }
 
+    /**
+     * Creates the tables which are needed to store player and ban data.
+     */
     private void createDefaultTables() {
         updateQuery("CREATE TABLE IF NOT EXISTS multi_bungee_bans(banID BIGINT(20) AUTO_INCREMENT " +
                 "PRIMARY KEY, bannedUUID VARCHAR(64) UNIQUE, bannedName VARCHAR(32), bannedBy VARCHAR(32), " +

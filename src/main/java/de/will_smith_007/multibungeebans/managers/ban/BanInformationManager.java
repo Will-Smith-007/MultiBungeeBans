@@ -16,6 +16,9 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * This manager has only the responsibility to get the information of a specific player ban from the sql database.
+ */
 @Singleton
 public class BanInformationManager {
 
@@ -27,6 +30,11 @@ public class BanInformationManager {
         this.databaseProvider = databaseProvider;
     }
 
+    /**
+     * Gets all currently banned usernames asynchronously.
+     *
+     * @return A {@link CompletableFuture} which contains a {@link List} with all banned usernames.
+     */
     public @NonNull CompletableFuture<List<String>> getBannedPlayerNamesAsync() {
         final List<String> bannedPlayers = new LinkedList<>();
         final String sqlQuery = "SELECT bannedName FROM multi_bungee_bans ORDER BY bannedName ASC";
@@ -47,6 +55,12 @@ public class BanInformationManager {
         });
     }
 
+    /**
+     * Gets the ban information of a username or uuid.
+     *
+     * @param uuidOrName uuid as string or username from which you want to get the information.
+     * @return A {@link BannedUser} which contains all ban information.
+     */
     public BannedUser getBanInformation(@NonNull String uuidOrName) {
         final String sqlQuery = "SELECT * FROM multi_bungee_bans WHERE bannedUUID= ? OR bannedName= ?";
         final PreparedStatement preparedStatement = databaseProvider.preparedStatement(sqlQuery);
@@ -83,10 +97,22 @@ public class BanInformationManager {
         return null;
     }
 
+    /**
+     * Gets the ban information of a username or uuid asynchronously.
+     *
+     * @param uuidOrName uuid as string or username from which you want to get the information.
+     * @return A {@link CompletableFuture} which contains the {@link BannedUser} with all ban information.
+     */
     public CompletableFuture<BannedUser> getBanInformationAsync(@NonNull String uuidOrName) {
         return CompletableFuture.supplyAsync(() -> getBanInformation(uuidOrName));
     }
 
+    /**
+     * Gets the ban information of a username or uuid asynchronously.
+     *
+     * @param banID ID of a ban from which you want to get the information.
+     * @return A {@link CompletableFuture} which contains the {@link BannedUser} with all ban information.
+     */
     public CompletableFuture<BannedUser> getBanInformationAsync(long banID) {
         final String sqlQuery = "SELECT * FROM multi_bungee_bans WHERE banID= ?";
 

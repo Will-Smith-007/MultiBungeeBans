@@ -2,8 +2,8 @@ package de.will_smith_007.multibungeebans.redis;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import de.will_smith_007.multibungeebans.redis.interfaces.IRedisSubscribePublishHandler;
 import de.will_smith_007.multibungeebans.redis.interfaces.IRedisIncomingMessageHandler;
+import de.will_smith_007.multibungeebans.redis.interfaces.IRedisSubscribePublishHandler;
 import lombok.NonNull;
 import net.md_5.bungee.api.plugin.Plugin;
 import redis.clients.jedis.Jedis;
@@ -13,6 +13,10 @@ import redis.clients.jedis.JedisPubSub;
 import java.util.concurrent.CompletableFuture;
 import java.util.logging.Logger;
 
+/**
+ * This class has only the responsibility to subscribe/unsubscribe to a redis channel and can be used
+ * to sent data to a specific redis channel with the given data.
+ */
 @Singleton
 public class RedisSubscribePublishHandler implements IRedisSubscribePublishHandler {
 

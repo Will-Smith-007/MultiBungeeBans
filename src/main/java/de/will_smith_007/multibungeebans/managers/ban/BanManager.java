@@ -10,6 +10,9 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * This manager has only the responsibility to save player bans to the sql database.
+ */
 @Singleton
 public class BanManager {
 
@@ -22,6 +25,11 @@ public class BanManager {
     }
 
 
+    /**
+     * Saves a player ban to the database with the given information in the {@link BannedUser} object asynchronously.
+     *
+     * @param bannedUser The banned user which contains all information of the ban.
+     */
     public void banPlayerAsync(@NonNull BannedUser bannedUser) {
         final LocalDateTime unbanDateTime = bannedUser.getUnbanDateTime();
         final String formattedUnbanDateTime = (unbanDateTime == null ? null : dateTimeFormatter.format(unbanDateTime));

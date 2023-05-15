@@ -13,6 +13,7 @@ import de.will_smith_007.multibungeebans.redis.interfaces.IRedisIncomingMessageH
 import de.will_smith_007.multibungeebans.redis.interfaces.IRedisSubscribePublishHandler;
 import de.will_smith_007.multibungeebans.sql.DatabaseProvider;
 import de.will_smith_007.multibungeebans.sql.HikariConfigurationHandler;
+import de.will_smith_007.multibungeebans.sql.interfaces.IDatabaseConnector;
 import de.will_smith_007.multibungeebans.sql.interfaces.IDatabaseProvider;
 import de.will_smith_007.multibungeebans.sql.interfaces.IHikariConfigurationHandler;
 import lombok.NonNull;
@@ -38,6 +39,7 @@ public class InjectionModule extends AbstractModule {
 
         // SQL bindings
         bind(ISQLDatabaseConfig.class).to(DatabaseConfig.class);
+        bind(IDatabaseConnector.class).to(DatabaseProvider.class);
         bind(IDatabaseProvider.class).to(DatabaseProvider.class);
         bind(IHikariConfigurationHandler.class).to(HikariConfigurationHandler.class);
 

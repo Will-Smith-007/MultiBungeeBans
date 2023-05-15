@@ -10,6 +10,9 @@ import redis.clients.jedis.JedisPubSub;
 
 import java.util.UUID;
 
+/**
+ * This class has only the responsibility handle incoming redis messages.
+ */
 @Singleton
 public class RedisIncomingMessageHandler implements IRedisIncomingMessageHandler {
 
