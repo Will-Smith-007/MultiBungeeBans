@@ -90,7 +90,7 @@ public class BanCommand extends Command implements TabExecutor {
             proxiedPlayer.disconnect(new TextComponent(formattedKickMessage));
         } else {
             sender.sendMessage(new TextComponent(Message.PREFIX + "§cPlease use the following command: " +
-                    "§e/ban [Player] [BanReason]"));
+                    "§e/gban [Player] [BanReason]"));
         }
     }
 

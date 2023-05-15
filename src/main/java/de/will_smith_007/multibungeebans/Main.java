@@ -2,9 +2,7 @@ package de.will_smith_007.multibungeebans;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import de.will_smith_007.multibungeebans.commands.BanCommand;
-import de.will_smith_007.multibungeebans.commands.TempBanCommand;
-import de.will_smith_007.multibungeebans.commands.UnbanCommand;
+import de.will_smith_007.multibungeebans.commands.*;
 import de.will_smith_007.multibungeebans.dependency_injection.InjectionModule;
 import de.will_smith_007.multibungeebans.listeners.PlayerConnectionListener;
 import de.will_smith_007.multibungeebans.redis.interfaces.IRedisConnector;
@@ -29,7 +27,9 @@ public class Main extends Plugin {
         registerCommands(
                 injector.getInstance(BanCommand.class),
                 injector.getInstance(UnbanCommand.class),
-                injector.getInstance(TempBanCommand.class)
+                injector.getInstance(TempBanCommand.class),
+                injector.getInstance(BanCheckCommand.class),
+                injector.getInstance(BanListCommand.class)
         );
 
         registerListeners(

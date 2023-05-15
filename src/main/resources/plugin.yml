@@ -4,7 +4,13 @@ version: 1.0.0-SNAPSHOT
 author: Will_Smith_007
 
 commands:
-  ban:
+  gban:
     description: Ban a player across multiple proxies.
+  tempban:
+    description: Ban a player temporary across multiple proxies.
   unban:
     description: Unban a player from your network.
+  bancheck:
+    description: Check the current ban information of a player.
+  banlist:
+    description: Check which players are currently banned.

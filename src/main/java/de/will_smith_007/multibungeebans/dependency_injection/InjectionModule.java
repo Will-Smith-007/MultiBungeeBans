@@ -42,8 +42,10 @@ public class InjectionModule extends AbstractModule {
         bind(IHikariConfigurationHandler.class).to(HikariConfigurationHandler.class);
 
         // Command bindings
-        bind(String.class).annotatedWith(Names.named("BanCommand")).toInstance("ban");
+        bind(String.class).annotatedWith(Names.named("BanCommand")).toInstance("gban");
         bind(String.class).annotatedWith(Names.named("UnbanCommand")).toInstance("unban");
         bind(String.class).annotatedWith(Names.named("TempBanCommand")).toInstance("tempban");
+        bind(String.class).annotatedWith(Names.named("BanCheckCommand")).toInstance("bancheck");
+        bind(String.class).annotatedWith(Names.named("BanListCommand")).toInstance("banlist");
     }
 }
