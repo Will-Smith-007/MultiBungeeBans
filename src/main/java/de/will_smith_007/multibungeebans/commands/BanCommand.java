@@ -20,6 +20,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * This {@link Command} allows you to ban players permanently across multiple proxies.
+ */
 public class BanCommand extends Command implements TabExecutor {
 
     private final BanManager banManager;
@@ -51,11 +54,13 @@ public class BanCommand extends Command implements TabExecutor {
 
         if (length > 1) {
             final String targetUsername = args[0];
+            // Gets the ban reason and appends reason arguments to the string builder
             final StringBuilder stringReasonBuilder = new StringBuilder();
 
             for (int index = 1; index != length; index++) {
                 stringReasonBuilder.append(args[index]).append(" ");
             }
+            // Deletes the last blank character
             stringReasonBuilder.deleteCharAt((stringReasonBuilder.length() - 1));
 
             final UUID playerUUID = userManager.getPlayerUUID(targetUsername);
@@ -64,6 +69,7 @@ public class BanCommand extends Command implements TabExecutor {
                 return;
             }
 
+            // Builds the banned user object
             final BannedUser bannedUser = BannedUser.builder()
                     .bannedUUID(playerUUID)
                     .bannedUsername(targetUsername)
@@ -73,6 +79,7 @@ public class BanCommand extends Command implements TabExecutor {
                     .isPermanentlyBanned(true)
                     .build();
 
+            // Saves the ban to the sql database
             banManager.banPlayerAsync(bannedUser);
 
             sender.sendMessage(new TextComponent(Message.PREFIX + "§aYou have §4permanently§a banned §e" +
@@ -81,6 +88,7 @@ public class BanCommand extends Command implements TabExecutor {
             final String formattedKickMessage = banMessageFormatter.formatKickMessage(bannedUser);
             final ProxiedPlayer proxiedPlayer = ProxyServer.getInstance().getPlayer(playerUUID);
 
+            // If proxy player wasn't found on this proxy, then publish ban data to the subscribed proxies
             if (proxiedPlayer == null) {
                 redisSubscribePublishHandler.publish("BanChannel", "ban#" +
                         playerUUID + "#" + formattedKickMessage);

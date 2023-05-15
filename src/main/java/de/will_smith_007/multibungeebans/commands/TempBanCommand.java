@@ -21,6 +21,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * This {@link Command} allows you to temporary ban players across multiple proxies.
+ */
 public class TempBanCommand extends Command implements TabExecutor {
 
     private final BanManager banManager;

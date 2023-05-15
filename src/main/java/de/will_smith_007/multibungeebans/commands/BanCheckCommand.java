@@ -14,6 +14,9 @@ import net.md_5.bungee.api.plugin.TabExecutor;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
+/**
+ * This {@link Command} allows you to check the ban information of a player.
+ */
 public class BanCheckCommand extends Command implements TabExecutor {
 
     private final BanInformationManager banInformationManager;
@@ -41,8 +44,10 @@ public class BanCheckCommand extends Command implements TabExecutor {
 
         final String targetUsernameOrUUID = args[0];
 
+        // If it can parse a long, then get the information from the banID. Otherwise, from the name or uuid
         try {
             final long banID = Long.parseLong(targetUsernameOrUUID);
+            // Gets information from the banID
             banInformationManager.getBanInformationAsync(banID).thenAccept(bannedUser -> {
                 if (bannedUser == null) {
                     sender.sendMessage(new TextComponent(Message.PREFIX + "§cCouldn't find any bans for ID §e" + banID + "§c."));
@@ -51,6 +56,7 @@ public class BanCheckCommand extends Command implements TabExecutor {
                 sendBanInformationMessage(sender, bannedUser);
             });
         } catch (NumberFormatException numberFormatException) {
+            // Gets information from the username or uuid
             banInformationManager.getBanInformationAsync(targetUsernameOrUUID).thenAccept(bannedUser -> {
                 if (bannedUser == null) {
                     sender.sendMessage(new TextComponent(Message.PREFIX + "§cCouldn't find any bans for player or uuid §e" +
@@ -71,6 +77,12 @@ public class BanCheckCommand extends Command implements TabExecutor {
         return null;
     }
 
+    /**
+     * Sends the standard ban information message to the player who requested the information.
+     *
+     * @param sender     Sender which requested the information and to which the message should be sent.
+     * @param bannedUser Banned user object to get the data from it.
+     */
     private void sendBanInformationMessage(@NonNull CommandSender sender, @NonNull BannedUser bannedUser) {
         final boolean isPermanentlyBanned = bannedUser.isPermanentlyBanned();
         sender.sendMessage(new TextComponent(Message.PREFIX + "§c" + bannedUser.getBannedUsername() +

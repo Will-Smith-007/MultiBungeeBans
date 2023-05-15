@@ -13,6 +13,9 @@ import net.md_5.bungee.api.plugin.TabExecutor;
 
 import java.util.List;
 
+/**
+ * This {@link Command} allows you to show all banned players.
+ */
 public class BanListCommand extends Command implements TabExecutor {
 
     private final BanInformationManager banInformationManager;
@@ -52,6 +55,7 @@ public class BanListCommand extends Command implements TabExecutor {
                 return;
             }
 
+            // Calculation of pages and indexes
             final int bannedUsernameSize = bannedUsernames.size();
             final int maxPages = (bannedUsernameSize / maxResultsPerPage) +
                     (bannedUsernameSize % maxResultsPerPage == 0 ? 0 : 1);
@@ -87,6 +91,7 @@ public class BanListCommand extends Command implements TabExecutor {
                         .append(checkBanComponent).create());
             }
 
+            // Clickable component to switch to the previous page
             final BaseComponent previousPageComponent = new TextComponent(
                     (finalSelectedPage != 1 ? "§c«" : ""));
             previousPageComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND,
@@ -94,6 +99,7 @@ public class BanListCommand extends Command implements TabExecutor {
             previousPageComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
                     new Text("§eClick to show the previous page")));
 
+            // Clickable Component to switch to the next page
             final BaseComponent nextPageComponent = new TextComponent(
                     (finalSelectedPage != maxPages ? "§a»" : ""));
             nextPageComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND,

@@ -13,6 +13,9 @@ import net.md_5.bungee.api.plugin.TabExecutor;
 
 import java.util.Arrays;
 
+/**
+ * This {@link Command} allows you to unban players.
+ */
 public class UnbanCommand extends Command implements TabExecutor {
 
     private final UnbanManager unbanManager;
@@ -42,8 +45,10 @@ public class UnbanCommand extends Command implements TabExecutor {
 
         final String targetUsernameOrUUID = args[0];
 
+        // If it can parse a long, then get the information from the banID. Otherwise, from the name or uuid
         try {
             final long banID = Long.parseLong(targetUsernameOrUUID);
+            // Gets information from the banID
             banInformationManager.getBanInformationAsync(banID).thenAccept(bannedUser -> {
                 if (bannedUser == null) {
                     sender.sendMessage(new TextComponent(Message.PREFIX + "§cCouldn't find any bans for the ID §e" +
@@ -56,6 +61,7 @@ public class UnbanCommand extends Command implements TabExecutor {
                         bannedUser.getBannedUsername() + "§a."));
             });
         } catch (NumberFormatException numberFormatException) {
+            // Gets information from the username or uuid
             banInformationManager.getBanInformationAsync(targetUsernameOrUUID).thenAccept(bannedUser -> {
                 if (bannedUser == null) {
                     sender.sendMessage(new TextComponent(Message.PREFIX + "§cCouldn't find any bans for UUID or " +
